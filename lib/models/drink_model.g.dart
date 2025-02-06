@@ -12,10 +12,6 @@ DrinkModel _$DrinkModelFromJson(Map<String, dynamic> json) => DrinkModel(
       price: (json['price'] as num).toDouble(),
       categoryId: (json['category_id'] as num).toInt(),
       iconUrl: json['iconUrl'] as String?,
-      deleted: json['deleted'] as bool?,
-      deletedAt: json['deletedAt'] == null
-          ? null
-          : DateTime.parse(json['deletedAt'] as String),
     );
 
 Map<String, dynamic> _$DrinkModelToJson(DrinkModel instance) =>
@@ -25,6 +21,4 @@ Map<String, dynamic> _$DrinkModelToJson(DrinkModel instance) =>
       'price': instance.price,
       'category_id': instance.categoryId,
       'iconUrl': instance.iconUrl,
-      'deleted': instance.deleted,
-      'deletedAt': instance.deletedAt?.toIso8601String(),
     };
