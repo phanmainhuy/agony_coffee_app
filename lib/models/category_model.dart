@@ -7,12 +7,12 @@ class CategoryModel {
   @JsonKey(name: 'id')
   final int id;
   final String name;
-  final String iconUrl;
+  final String? iconUrl;
 
   CategoryModel({
     required this.id,
     required this.name,
-    required this.iconUrl,
+    this.iconUrl,
   });
 
   // Auto-generate fromJson & toJson

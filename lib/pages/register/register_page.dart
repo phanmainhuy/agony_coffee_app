@@ -3,6 +3,7 @@ import 'package:agony_coffee_app/bloc/user/user_event.dart';
 import 'package:agony_coffee_app/bloc/user/user_state.dart';
 import 'package:agony_coffee_app/constants/app_color.dart';
 import 'package:agony_coffee_app/constants/app_routes.dart';
+import 'package:agony_coffee_app/pages/category/category_page.dart';
 import 'package:agony_coffee_app/pages/components/dialogs/error_dialog.dart';
 import 'package:agony_coffee_app/pages/components/dialogs/loading_dialog.dart';
 import 'package:agony_coffee_app/pages/components/widgets/app_elevated_button.dart';
@@ -135,10 +136,16 @@ class _RegisterPageState extends State<RegisterPage> {
                 break;
 
               case UserRegisterSuccessState:
-                navigatorKey.currentState?.pushNamedAndRemoveUntil(
-                  RouteName.homeRoute,
-                  (Route<dynamic> route) => false,
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryPage(
+                      userModel: (state as UserRegisterSuccessState).userModel,
+                    ),
+                  ),
+                  (Route<dynamic> route) => false, // Remove all routes
                 );
+
                 break;
             }
           },

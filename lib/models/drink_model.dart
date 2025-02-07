@@ -11,6 +11,8 @@ class DrinkModel {
   @JsonKey(name: 'category_id')
   final int categoryId;
   final String? iconUrl;
+  @JsonKey(name: 'cart_quantity')
+  final int cartQuantity;
 
   DrinkModel({
     required this.id,
@@ -18,6 +20,7 @@ class DrinkModel {
     required this.price,
     required this.categoryId,
     this.iconUrl,
+    required this.cartQuantity,
   });
 
   // Auto-generate fromJson & toJson

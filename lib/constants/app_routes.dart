@@ -8,14 +8,12 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   static Route<dynamic> generatedRoute(RouteSettings settings) {
     switch (settings.name) {
-    case RouteName.splashRoute:
+      case RouteName.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashPage());
       case RouteName.loginRoute:
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case RouteName.registerRoute:
         return MaterialPageRoute(builder: (_) => const RegisterPage());
-      // case RouteName.homeRoute:
-      //   return MaterialPageRoute(builder: (_) => const HomePage());
 
       default:
         return MaterialPageRoute(
@@ -31,5 +29,6 @@ class RouteName {
   static const String splashRoute = "/splash";
   static const String loginRoute = "/login";
   static const String registerRoute = "/register";
-  static const String homeRoute = "/home";
+  static const String categoryRoute = "/category";
+  static const String cartRoute = "/cart";
 }

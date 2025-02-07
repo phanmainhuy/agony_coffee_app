@@ -1,9 +1,12 @@
+import 'package:agony_coffee_app/bloc/cart/cart_bloc.dart';
+import 'package:agony_coffee_app/bloc/cart/cart_event.dart';
 import 'package:agony_coffee_app/bloc/user/user_bloc.dart';
 import 'package:agony_coffee_app/bloc/user/user_event.dart';
 import 'package:agony_coffee_app/bloc/user/user_state.dart';
 import 'package:agony_coffee_app/constants/app_color.dart';
 import 'package:agony_coffee_app/constants/app_routes.dart';
 import 'package:agony_coffee_app/models/user_model.dart';
+import 'package:agony_coffee_app/pages/category/category_page.dart';
 import 'package:agony_coffee_app/pages/components/dialogs/error_dialog.dart';
 import 'package:agony_coffee_app/pages/components/dialogs/loading_dialog.dart';
 import 'package:agony_coffee_app/pages/components/widgets/app_elevated_button.dart';
@@ -124,9 +127,20 @@ class _LoginPageState extends State<LoginPage> {
                     break;
 
                   case UserLoginSuccessState:
-                    navigatorKey.currentState?.pushNamedAndRemoveUntil(
-                      RouteName.homeRoute,
-                      (Route<dynamic> route) => false,
+                    UserModel loginInfo =
+                        (state as UserLoginSuccessState).loginInfo;
+                    context
+                        .read<CartBloc>()
+                        .add(FetchCartEvent(userID: loginInfo.id));
+
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryPage(
+                          userModel: (state as UserLoginSuccessState).loginInfo,
+                        ),
+                      ),
+                      (Route<dynamic> route) => false, // Remove all routes
                     );
                     break;
                 }

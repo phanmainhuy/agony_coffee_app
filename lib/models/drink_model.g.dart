@@ -12,6 +12,7 @@ DrinkModel _$DrinkModelFromJson(Map<String, dynamic> json) => DrinkModel(
       price: (json['price'] as num).toDouble(),
       categoryId: (json['category_id'] as num).toInt(),
       iconUrl: json['iconUrl'] as String?,
+      cartQuantity: (json['cart_quantity'] as num).toInt(),
     );
 
 Map<String, dynamic> _$DrinkModelToJson(DrinkModel instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$DrinkModelToJson(DrinkModel instance) =>
       'price': instance.price,
       'category_id': instance.categoryId,
       'iconUrl': instance.iconUrl,
+      'cart_quantity': instance.cartQuantity,
     };

@@ -9,7 +9,10 @@ class UserLoadingState extends UserState {
   UserLoadingState({required this.isLoading});
 }
 
-class UserLoginSuccessState extends UserState {}
+class UserLoginSuccessState extends UserState {
+  final UserModel loginInfo;
+  UserLoginSuccessState({required this.loginInfo});
+}
 
 class LoginUserErrorState extends UserState {
   final String? message;
@@ -17,7 +20,10 @@ class LoginUserErrorState extends UserState {
   LoginUserErrorState({this.message});
 }
 
-class UserRegisterSuccessState extends UserState {}
+class UserRegisterSuccessState extends UserState {
+  final UserModel userModel;
+  UserRegisterSuccessState({required this.userModel});
+}
 
 class RegisterUserErrorState extends UserState {
   final String? message;

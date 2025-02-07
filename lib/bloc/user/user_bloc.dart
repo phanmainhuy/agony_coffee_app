@@ -9,12 +9,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<LoginEvent>((event, emit) async {
       try {
         emit(UserLoadingState(isLoading: true));
-        await userRepository.login(
+        var result = await userRepository.login(
           email: event.email,
           password: event.password,
         );
         emit(UserLoadingState(isLoading: false));
-        emit(UserLoginSuccessState());
+        emit(UserLoginSuccessState(loginInfo: result));
       } catch (e) {
         emit(UserLoadingState(isLoading: false));
         emit(LoginUserErrorState(message: e.toString()));
@@ -24,13 +24,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<RegisterEvent>((event, emit) async {
       try {
         emit(UserLoadingState(isLoading: true));
-        await userRepository.register(
+        var userInfo = await userRepository.register(
             email: event.email,
             password: event.password,
             name: event.name,
             phone: event.phone);
         emit(UserLoadingState(isLoading: false));
-        emit(UserRegisterSuccessState());
+        emit(UserRegisterSuccessState(userModel: userInfo));
       } catch (e) {
         emit(UserLoadingState(isLoading: false));
         emit(RegisterUserErrorState(message: e.toString()));
