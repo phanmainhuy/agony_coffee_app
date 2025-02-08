@@ -84,7 +84,7 @@ class CartRepository {
     if (response.statusCode == 200) {
       dynamic jsonData = json.decode(response.body);
       print(
-          'status: ${response.statusCode} \nresponse.body: \n${response.body.toString()}');
+          'addCart status: ${response.statusCode} \nresponse.body: \n${response.body.toString()}');
       return CartModel.fromJson(jsonData);
     } else {
       print(

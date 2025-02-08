@@ -9,11 +9,11 @@ class DrinkCard extends StatelessWidget {
   final VoidCallback? onDecrement;
 
   const DrinkCard({
-    Key? key,
+    super.key,
     required this.drink,
     this.onIncrement,
     this.onDecrement,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

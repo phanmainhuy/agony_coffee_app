@@ -55,9 +55,7 @@ class _CartCardState extends State<CartCard> {
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      if (quantity > 1) {
-                        quantity--;
-                      }
+                      quantity--;
                     });
                     context.read<CartBloc>().add(UpdateItemCartEvent(
                           userID: item.userId,

@@ -1,6 +1,5 @@
 import 'package:agony_coffee_app/bloc/cart/cart_bloc.dart';
 import 'package:agony_coffee_app/bloc/cart/cart_event.dart';
-import 'package:agony_coffee_app/bloc/cart/cart_state.dart';
 import 'package:agony_coffee_app/bloc/drink/drink_bloc.dart';
 import 'package:agony_coffee_app/bloc/drink/drink_event.dart';
 import 'package:agony_coffee_app/bloc/drink/drink_state.dart';
@@ -32,6 +31,7 @@ class _DrinkListState extends State<DrinkList> {
   @override
   void initState() {
     super.initState();
+    context.read<CartBloc>().add(FetchCartEvent(userID: widget.userModel.id));
     context.read<DrinkBloc>().add(FetchDrinksByCategoryIDEvent(
           categoryID: widget.categoryModel.id,
           userID: widget.userModel.id,
@@ -39,6 +39,13 @@ class _DrinkListState extends State<DrinkList> {
   }
 
   void _incrementQuantity(int index) {
+    final cartID = context.read<CartBloc>().cartData.data[0].cartId;
+    context.read<CartBloc>().add(UpdateItemCartEvent(
+          userID: widget.userModel.id,
+          drinkID: drinks[index].id,
+          quantity: drinks[index].cartQuantity + 1,
+          cartID: cartID,
+        ));
     setState(() {
       drinks[index] = DrinkModel(
         id: drinks[index].id,
@@ -49,17 +56,17 @@ class _DrinkListState extends State<DrinkList> {
         cartQuantity: drinks[index].cartQuantity + 1,
       );
     });
-
-    context.read<CartBloc>().add(
-          AddCartEvent(
-              userID: widget.userModel.id,
-              drinkID: drinks[index].id,
-              price: drinks[index].price),
-        );
   }
 
   void _decrementQuantity(int index) {
     if (drinks[index].cartQuantity > 0) {
+      final cartID = context.read<CartBloc>().cartData.data[0].cartId;
+      context.read<CartBloc>().add(UpdateItemCartEvent(
+            userID: widget.userModel.id,
+            drinkID: drinks[index].id,
+            quantity: drinks[index].cartQuantity - 1,
+            cartID: cartID,
+          ));
       setState(() {
         drinks[index] = DrinkModel(
           id: drinks[index].id,
@@ -70,13 +77,6 @@ class _DrinkListState extends State<DrinkList> {
           cartQuantity: drinks[index].cartQuantity - 1,
         );
       });
-      final cartData = context.read<CartBloc>().cartData;
-      context.read<CartBloc>().add(UpdateItemCartEvent(
-            userID: widget.userModel.id,
-            drinkID: drinks[index].id,
-            quantity: drinks[index].cartQuantity - 1,
-            cartID: cartData.data[0].cartId,
-          ));
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:agony_coffee_app/bloc/cart/cart_bloc.dart';
+import 'package:agony_coffee_app/bloc/cart/cart_event.dart';
 import 'package:agony_coffee_app/bloc/cart/cart_state.dart';
 import 'package:agony_coffee_app/constants/app_color.dart';
 import 'package:agony_coffee_app/models/user_model.dart';
@@ -23,6 +24,25 @@ class AppCartBadge extends StatefulWidget {
 class _AppCartBadgeState extends State<AppCartBadge> {
   int itemCount = 0;
   @override
+  void initState() {
+    super.initState();
+    // cart number
+
+    // Access the current CartBloc state
+    final cartState = context.read<CartBloc>().state;
+
+    // Check if the cart is already loaded and update the itemCount
+    if (cartState is FetchCartSuccessState) {
+      itemCount = cartState.cart.totalQuantity;
+    } else if (context.read<CartBloc>().cartData.totalQuantity > 0) {
+      itemCount = context.read<CartBloc>().cartData.totalQuantity;
+    }
+
+    // Fetch the cart in case it's not yet loaded
+    context.read<CartBloc>().add(FetchCartEvent(userID: widget.userModel.id));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<CartBloc, CartState>(
       listener: (context, state) {
@@ -32,6 +52,13 @@ class _AppCartBadgeState extends State<AppCartBadge> {
             break;
           case UpdateCartStatusSuccessState:
             itemCount = 0;
+            break;
+          case UpdateItemCartSuccessState:
+            itemCount =
+                (state as UpdateItemCartSuccessState).cart.totalQuantity;
+            break;
+          case AddCartEventSuccessState:
+            itemCount = (state as AddCartEventSuccessState).cart.totalQuantity;
             break;
         }
       },
